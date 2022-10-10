@@ -1,5 +1,3 @@
-// 
-
 // document.getElementById('button').addEventListener('click',loadData); // Event listener that fires once button is clicked
 
 // function loadData(){
@@ -111,28 +109,76 @@
 // }
 
 // GRABBING FROM OUTSIDE API (CHUCK NORRIS JOKE API)
-document.querySelector('.get-jokes').addEventListener('click', getJokes);
+// document.querySelector('.get-jokes').addEventListener('click', getJokes);
 
-function getJokes(e){
-    const number = document.querySelector('input[type="number"]').value;
-    let output = '';
+// function getJokes(e){
+//     const number = document.querySelector('input[type="number"]').value;
+//     let output = '';
 
-    for(i = 0; i < number; i++){
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', 'https://api.chucknorris.io/jokes/random?category=dev', true);
+//     for(i = 0; i < number; i++){
+//         const xhr = new XMLHttpRequest();
+//         xhr.open('GET', 'https://api.chucknorris.io/jokes/random?category=dev', true);
 
-        xhr.onload = function() {
-            if(this.status === 200) {
-                const response = JSON.parse(this.responseText);
-                output += `<li>${response.value}</li>`;
-            }
-            else{
-                output += `<li>Something went wrong</li>`;
-            }
-            document.querySelector('.jokes').innerHTML = output;
-        }
-        xhr.send();
-    }
+//         xhr.onload = function() {
+//             if(this.status === 200) {
+//                 const response = JSON.parse(this.responseText);
+//                 output += `<li>${response.value}</li>`;
+//             }
+//             else{
+//                 output += `<li>Something went wrong</li>`;
+//             }
+//             document.querySelector('.jokes').innerHTML = output;
+//         }
+//         xhr.send();
+//     }
 
-    e.preventDefault();
-}
+//     e.preventDefault();
+// }
+
+// CALLBACKS
+
+// Synchronous
+// const posts = [
+//     {title: 'Post One', body: 'This is post one'},
+//     {title: 'Post Two', body: 'This is post two'},
+// ];
+
+// function createPost(post){
+//     setTimeout(function(){
+//         posts.push(post);
+//     }, 2000);
+// }
+
+// function getPosts(){
+//     setTimeout(function(){
+//         let output = '';
+//         posts.forEach(function(post){
+//             output += `<li>${post.title}</li>`;
+//         });
+//         document.body.innerHTML = output;
+//     }, 1000);
+// }
+
+// createPost({title: 'Post Three', body: 'This is post three'});
+
+// getPosts();
+
+// Asynchronous using callbacks
+// function createPost(post, callback){ //pass in callback variable; can name whatever
+//     setTimeout(function(){
+//         posts.push(post);
+//         callback(); // calls the callback function after creating the post
+//     }, 2000);
+// }
+
+// function getPosts(){
+//     setTimeout(function(){
+//         let output = '';
+//         posts.forEach(function(post){
+//             output += `<li>${post.title}</li>`;
+//         });
+//         document.body.innerHTML = output;
+//     }, 1000);
+// }
+
+// createPost({title: 'Post Three', body: 'This is post three'}, getPosts); // will call getPosts as a callback function after creating the post!
