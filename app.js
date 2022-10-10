@@ -49,63 +49,90 @@
 // GRABBING FROM JSON FILE
 
 // Event listeners on buttons
-document.getElementById('button1').addEventListener('click', loadCustomer);
-document.getElementById('button2').addEventListener('click', loadCustomers);
+// document.getElementById('button1').addEventListener('click', loadCustomer);
+// document.getElementById('button2').addEventListener('click', loadCustomers);
 
-// Load Single Customer
-function loadCustomer(e){
-    const xhr = new XMLHttpRequest();
+// // Load Single Customer
+// function loadCustomer(e){
+//     const xhr = new XMLHttpRequest();
 
-    xhr.open('GET', 'customer.json', true);
+//     xhr.open('GET', 'customer.json', true);
 
-    xhr.onload = function(){
-        if(this.status === 200){
-            // console.log(this.responseText);
-            const customer = JSON.parse(this.responseText);
+//     xhr.onload = function(){
+//         if(this.status === 200){
+//             // console.log(this.responseText);
+//             const customer = JSON.parse(this.responseText);
 
-            const output = `
-                <ul>
-                    <li>ID: ${customer.id}</li>
-                    <li>Name: ${customer.name}</li>
-                    <li>Company: ${customer.company}</li>
-                    <li>Company: ${customer.phone}</li>
-                </ul>
-            `;
+//             const output = `
+//                 <ul>
+//                     <li>ID: ${customer.id}</li>
+//                     <li>Name: ${customer.name}</li>
+//                     <li>Company: ${customer.company}</li>
+//                     <li>Company: ${customer.phone}</li>
+//                 </ul>
+//             `;
 
-            document.getElementById('customer').innerHTML = output;
+//             document.getElementById('customer').innerHTML = output;
+//         }
+//     }
+
+//     xhr.send();
+// }
+
+// // Load Customers
+// function loadCustomers(e){
+//     const xhr = new XMLHttpRequest();
+
+//     xhr.open('GET', 'customers.json', true);
+
+//     xhr.onload = function(){
+//         if(this.status === 200){
+//             // console.log(this.responseText);
+//             const customers = JSON.parse(this.responseText);
+
+//             let output = '';
+
+//             customers.forEach(function(customer){
+//                 output += `
+//                 <ul>
+//                     <li>ID: ${customer.id}</li>
+//                     <li>Name: ${customer.name}</li>
+//                     <li>Company: ${customer.company}</li>
+//                     <li>Company: ${customer.phone}</li>
+//                 </ul>
+//             `;
+//             });
+
+//             document.getElementById('customers').innerHTML = output;
+//         }
+//     }
+
+//     xhr.send();
+// }
+
+// GRABBING FROM OUTSIDE API (CHUCK NORRIS JOKE API)
+document.querySelector('.get-jokes').addEventListener('click', getJokes);
+
+function getJokes(e){
+    const number = document.querySelector('input[type="number"]').value;
+    let output = '';
+
+    for(i = 0; i < number; i++){
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', 'https://api.chucknorris.io/jokes/random?category=dev', true);
+
+        xhr.onload = function() {
+            if(this.status === 200) {
+                const response = JSON.parse(this.responseText);
+                output += `<li>${response.value}</li>`;
+            }
+            else{
+                output += `<li>Something went wrong</li>`;
+            }
+            document.querySelector('.jokes').innerHTML = output;
         }
+        xhr.send();
     }
 
-    xhr.send();
-}
-
-// Load Customers
-function loadCustomers(e){
-    const xhr = new XMLHttpRequest();
-
-    xhr.open('GET', 'customers.json', true);
-
-    xhr.onload = function(){
-        if(this.status === 200){
-            // console.log(this.responseText);
-            const customers = JSON.parse(this.responseText);
-
-            let output = '';
-
-            customers.forEach(function(customer){
-                output += `
-                <ul>
-                    <li>ID: ${customer.id}</li>
-                    <li>Name: ${customer.name}</li>
-                    <li>Company: ${customer.company}</li>
-                    <li>Company: ${customer.phone}</li>
-                </ul>
-            `;
-            });
-
-            document.getElementById('customers').innerHTML = output;
-        }
-    }
-
-    xhr.send();
+    e.preventDefault();
 }
